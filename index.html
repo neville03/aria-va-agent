@@ -23,10 +23,8 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'DM Mono', monospace; }
 
-  /* Layout */
   .app { display: grid; grid-template-columns: 280px 1fr 260px; grid-template-rows: 56px 1fr; height: 100vh; }
 
-  /* Top bar */
   .topbar { grid-column: 1/-1; display: flex; align-items: center; padding: 0 24px; border-bottom: 1px solid var(--border); background: var(--surface); gap: 16px; }
   .logo { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--accent); letter-spacing: 0.05em; }
   .logo span { color: var(--muted); font-size: 13px; font-family: 'DM Mono', monospace; margin-left: 8px; font-weight: 300; }
@@ -34,11 +32,7 @@
   .status-dot.thinking { background: var(--accent); animation: blink 1s infinite; }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
   .status-label { font-size: 11px; color: var(--muted); }
-  #api-key-input { background: var(--card); border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 11px; padding: 5px 10px; border-radius: 4px; width: 240px; }
-  #api-key-input::placeholder { color: var(--dim); }
-  #api-key-input:focus { outline: none; border-color: var(--accent); }
 
-  /* Sidebar left */
   .sidebar-left { background: var(--surface); border-right: 1px solid var(--border); padding: 20px 16px; overflow-y: auto; }
   .sidebar-section { margin-bottom: 28px; }
   .sidebar-label { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
@@ -47,7 +41,6 @@
   .quick-btn:hover { border-color: var(--accent); background: rgba(200,169,110,0.05); color: var(--accent2); }
   .quick-btn .qb-icon { display: inline-block; width: 14px; opacity: 0.6; }
 
-  /* Tasks mini list */
   .task-item { display: flex; gap: 8px; align-items: flex-start; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 11px; }
   .task-item:last-child { border-bottom: none; }
   .task-check { width: 12px; height: 12px; border: 1px solid var(--dim); border-radius: 2px; flex-shrink: 0; margin-top: 1px; cursor: pointer; transition: background 0.15s; }
@@ -60,7 +53,6 @@
   .priority-normal { background: rgba(107,163,214,0.1); color: var(--info); }
   .priority-low { background: rgba(122,120,114,0.1); color: var(--muted); }
 
-  /* Chat area */
   .chat-area { display: flex; flex-direction: column; overflow: hidden; }
   .messages { flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 20px; }
   .messages::-webkit-scrollbar { width: 4px; }
@@ -78,24 +70,20 @@
   .msg.user .msg-name { text-align: right; }
   .msg-bubble { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; font-size: 13px; line-height: 1.7; color: var(--text); }
   .msg.user .msg-bubble { background: rgba(200,169,110,0.08); border-color: rgba(200,169,110,0.2); }
-
   .msg-bubble pre { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; margin: 8px 0; font-size: 12px; overflow-x: auto; white-space: pre-wrap; }
   .msg-bubble strong { color: var(--accent2); font-weight: 500; }
   .msg-bubble em { color: var(--muted); }
 
-  /* Tool trace pills */
   .tool-trace { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 5px; }
   .tool-pill { font-size: 10px; padding: 2px 8px; border-radius: 3px; border: 1px solid var(--dim); color: var(--muted); background: var(--surface); display: flex; align-items: center; gap: 4px; }
   .tool-pill-name { color: var(--accent); }
 
-  /* Typing indicator */
   .typing-indicator { display: flex; gap: 4px; align-items: center; padding: 12px 16px; }
   .typing-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: bounce 1.2s infinite; }
   .typing-dot:nth-child(2) { animation-delay: 0.2s; }
   .typing-dot:nth-child(3) { animation-delay: 0.4s; }
   @keyframes bounce { 0%,80%,100%{transform:translateY(0)} 40%{transform:translateY(-5px)} }
 
-  /* Input bar */
   .input-bar { padding: 16px 24px; border-top: 1px solid var(--border); background: var(--surface); display: flex; gap: 10px; align-items: flex-end; }
   #chat-input { flex: 1; background: var(--card); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: 'DM Mono', monospace; font-size: 13px; padding: 10px 14px; resize: none; min-height: 40px; max-height: 120px; line-height: 1.5; transition: border-color 0.15s; }
   #chat-input::placeholder { color: var(--dim); }
@@ -105,7 +93,6 @@
   .send-btn:active { transform: scale(0.95); }
   .send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 
-  /* Sidebar right */
   .sidebar-right { background: var(--surface); border-left: 1px solid var(--border); padding: 20px 16px; overflow-y: auto; }
   .reminder-item { padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 8px; font-size: 11px; }
   .reminder-time { color: var(--accent); font-size: 10px; margin-top: 3px; }
@@ -115,7 +102,6 @@
   .clear-btn { background: none; border: 1px solid var(--border); color: var(--muted); font-family: 'DM Mono', monospace; font-size: 10px; padding: 4px 10px; border-radius: 4px; cursor: pointer; margin-left: auto; }
   .clear-btn:hover { border-color: var(--danger); color: var(--danger); }
 
-  /* Scrollbar */
   .sidebar-left::-webkit-scrollbar, .sidebar-right::-webkit-scrollbar { width: 3px; }
   .sidebar-left::-webkit-scrollbar-thumb, .sidebar-right::-webkit-scrollbar-thumb { background: var(--dim); }
 </style>
@@ -123,18 +109,17 @@
 <body>
 <div class="app">
 
-  <!-- Top bar -->
+  <!-- Top bar — API key removed, lives in Railway env vars -->
   <header class="topbar">
     <div class="logo">ARIA <span>/ Virtual Assistant Agent</span></div>
-    <input id="api-key-input" type="password" placeholder="Groq API key — sk-..." />
-    <div style="display:flex;align-items:center;gap:6px;margin-left:8px">
+    <div style="display:flex;align-items:center;gap:6px;margin-left:auto">
       <div class="status-dot" id="status-dot"></div>
       <span class="status-label" id="status-label">ready</span>
     </div>
     <button class="clear-btn" onclick="clearChat()">clear chat</button>
   </header>
 
-  <!-- Sidebar left: quick actions + tasks -->
+  <!-- Sidebar left -->
   <aside class="sidebar-left">
     <div class="sidebar-section">
       <div class="sidebar-label">Quick actions</div>
@@ -164,7 +149,7 @@
           <div class="msg-bubble">
             Good day. I'm <strong>ARIA</strong>, your personal assistant agent.<br><br>
             I can <strong>manage your tasks</strong>, <strong>set reminders</strong>, <strong>draft emails and proposals</strong>, and give you a <strong>daily briefing</strong> — all in plain English.<br><br>
-            Enter your Groq API key above, then tell me what's on your plate.
+            What's on your plate today?
           </div>
         </div>
       </div>
@@ -175,7 +160,7 @@
     </div>
   </main>
 
-  <!-- Sidebar right: reminders -->
+  <!-- Sidebar right -->
   <aside class="sidebar-right">
     <div class="sidebar-section">
       <div class="sidebar-label">Reminders
@@ -195,11 +180,10 @@
 </div>
 
 <script>
-const API = "http://localhost:5050";
+const API = "https://web-production-bf893.up.railway.app";
 const SESSION = "aria_" + Math.random().toString(36).slice(2);
 let isThinking = false;
 
-// ── Markdown-ish formatter ─────────────────────────────────────────────────
 function formatMessage(text) {
   return text
     .replace(/```([\s\S]*?)```/g, '<pre>$1</pre>')
@@ -208,7 +192,6 @@ function formatMessage(text) {
     .replace(/\n/g, '<br>');
 }
 
-// ── Render messages ────────────────────────────────────────────────────────
 function appendMessage(role, content, steps) {
   const container = document.getElementById("messages");
   const isUser = role === "user";
@@ -253,14 +236,11 @@ function removeTyping() {
   if (el) el.remove();
 }
 
-// ── Send message ───────────────────────────────────────────────────────────
 async function sendMessage(override) {
   if (isThinking) return;
   const input = document.getElementById("chat-input");
-  const apiKey = document.getElementById("api-key-input").value.trim();
   const text = override || input.value.trim();
   if (!text) return;
-  if (!apiKey) { appendMessage("assistant", "Please enter your Groq API key in the top bar first.", []); return; }
 
   input.value = "";
   input.style.height = "40px";
@@ -276,7 +256,7 @@ async function sendMessage(override) {
     const res = await fetch(API + "/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: text, session_id: SESSION, api_key: apiKey })
+      body: JSON.stringify({ message: text, session_id: SESSION })
     });
     const data = await res.json();
     removeTyping();
@@ -288,7 +268,7 @@ async function sendMessage(override) {
     refreshState();
   } catch(e) {
     removeTyping();
-    appendMessage("assistant", "Could not reach the agent server. Make sure `python agent.py` is running on port 5050.", []);
+    appendMessage("assistant", "Could not reach the agent server. Check that the Railway deployment is running.", []);
   }
 
   isThinking = false;
@@ -299,7 +279,6 @@ async function sendMessage(override) {
 
 function sendQuick(msg) { sendMessage(msg); }
 
-// ── Refresh sidebar state ──────────────────────────────────────────────────
 async function refreshState() {
   try {
     const res = await fetch(API + "/state");
@@ -335,7 +314,6 @@ function renderReminders(reminders) {
 }
 
 async function completeTask(id) {
-  const apiKey = document.getElementById("api-key-input").value.trim();
   await sendMessage(`Mark task ${id} as complete`);
 }
 
@@ -351,7 +329,6 @@ async function clearChat() {
     </div>`;
 }
 
-// ── Auto-resize textarea ───────────────────────────────────────────────────
 document.getElementById("chat-input").addEventListener("input", function() {
   this.style.height = "40px";
   this.style.height = Math.min(this.scrollHeight, 120) + "px";
