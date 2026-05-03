@@ -7,18 +7,9 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --bg:       #0d0e11;
-    --surface:  #13151a;
-    --card:     #181b22;
-    --border:   #252830;
-    --accent:   #c8a96e;
-    --accent2:  #e8c98e;
-    --text:     #e8e6e0;
-    --muted:    #7a7872;
-    --dim:      #3a3c42;
-    --success:  #4caf7d;
-    --info:     #6ba3d6;
-    --danger:   #e06b6b;
+    --bg: #0d0e11; --surface: #13151a; --card: #181b22; --border: #252830;
+    --accent: #c8a96e; --accent2: #e8c98e; --text: #e8e6e0; --muted: #7a7872;
+    --dim: #3a3c42; --success: #4caf7d; --info: #6ba3d6; --danger: #e06b6b;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'DM Mono', monospace; }
@@ -28,317 +19,182 @@
   .topbar { grid-column: 1/-1; display: flex; align-items: center; padding: 0 24px; border-bottom: 1px solid var(--border); background: var(--surface); gap: 16px; }
   .logo { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--accent); letter-spacing: 0.05em; }
   .logo span { color: var(--muted); font-size: 13px; font-family: 'DM Mono', monospace; margin-left: 8px; font-weight: 300; }
+  
   .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); margin-left: auto; }
   .status-dot.thinking { background: var(--accent); animation: blink 1s infinite; }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
   .status-label { font-size: 11px; color: var(--muted); }
 
-  .sidebar-left { background: var(--surface); border-right: 1px solid var(--border); padding: 20px 16px; overflow-y: auto; }
+  .sidebar-left, .sidebar-right { background: var(--surface); padding: 20px 16px; overflow-y: auto; }
+  .sidebar-left { border-right: 1px solid var(--border); }
+  .sidebar-right { border-left: 1px solid var(--border); }
+  
   .sidebar-section { margin-bottom: 28px; }
   .sidebar-label { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
 
-  .quick-btn { display: block; width: 100%; text-align: left; background: none; border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 11px; padding: 8px 12px; border-radius: 6px; cursor: pointer; margin-bottom: 6px; line-height: 1.4; transition: border-color 0.15s, background 0.15s; }
+  .quick-btn { display: block; width: 100%; text-align: left; background: none; border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 11px; padding: 8px 12px; border-radius: 6px; cursor: pointer; margin-bottom: 6px; transition: 0.15s; }
   .quick-btn:hover { border-color: var(--accent); background: rgba(200,169,110,0.05); color: var(--accent2); }
-  .quick-btn .qb-icon { display: inline-block; width: 14px; opacity: 0.6; }
-
-  .task-item { display: flex; gap: 8px; align-items: flex-start; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 11px; }
-  .task-item:last-child { border-bottom: none; }
-  .task-check { width: 12px; height: 12px; border: 1px solid var(--dim); border-radius: 2px; flex-shrink: 0; margin-top: 1px; cursor: pointer; transition: background 0.15s; }
-  .task-check:hover { border-color: var(--accent); }
-  .task-check.done { background: var(--success); border-color: var(--success); }
-  .task-title { color: var(--text); line-height: 1.4; }
-  .task-title.done { text-decoration: line-through; color: var(--muted); }
-  .priority-badge { font-size: 9px; padding: 1px 5px; border-radius: 3px; margin-left: auto; flex-shrink: 0; }
-  .priority-high { background: rgba(224,107,107,0.15); color: var(--danger); }
-  .priority-normal { background: rgba(107,163,214,0.1); color: var(--info); }
-  .priority-low { background: rgba(122,120,114,0.1); color: var(--muted); }
 
   .chat-area { display: flex; flex-direction: column; overflow: hidden; }
   .messages { flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 20px; }
-  .messages::-webkit-scrollbar { width: 4px; }
-  .messages::-webkit-scrollbar-thumb { background: var(--dim); border-radius: 2px; }
-
+  
   .msg { display: flex; gap: 12px; animation: fadein 0.3s ease; max-width: 700px; }
   @keyframes fadein { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
   .msg.user { flex-direction: row-reverse; align-self: flex-end; }
-  .msg-avatar { width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; font-family: 'DM Serif Display', serif; }
-  .aria-avatar { background: linear-gradient(135deg, #c8a96e22, #c8a96e44); border: 1px solid var(--accent); color: var(--accent); }
+  
+  .msg-avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-family: 'DM Serif Display', serif; }
+  .aria-avatar { background: rgba(200,169,110,0.1); border: 1px solid var(--accent); color: var(--accent); }
   .user-avatar { background: var(--card); border: 1px solid var(--border); color: var(--muted); }
 
-  .msg-body { max-width: 560px; }
-  .msg-name { font-size: 10px; color: var(--muted); margin-bottom: 4px; letter-spacing: 0.05em; }
-  .msg.user .msg-name { text-align: right; }
   .msg-bubble { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; font-size: 13px; line-height: 1.7; color: var(--text); }
   .msg.user .msg-bubble { background: rgba(200,169,110,0.08); border-color: rgba(200,169,110,0.2); }
-  .msg-bubble pre { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; margin: 8px 0; font-size: 12px; overflow-x: auto; white-space: pre-wrap; }
-  .msg-bubble strong { color: var(--accent2); font-weight: 500; }
-  .msg-bubble em { color: var(--muted); }
 
-  .tool-trace { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 5px; }
-  .tool-pill { font-size: 10px; padding: 2px 8px; border-radius: 3px; border: 1px solid var(--dim); color: var(--muted); background: var(--surface); display: flex; align-items: center; gap: 4px; }
-  .tool-pill-name { color: var(--accent); }
+  .input-bar { padding: 16px 24px; border-top: 1px solid var(--border); background: var(--surface); display: flex; gap: 10px; }
+  #chat-input { flex: 1; background: var(--card); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: 'DM Mono', monospace; font-size: 13px; padding: 10px 14px; resize: none; min-height: 40px; }
+  .send-btn { background: var(--accent); color: #0d0e11; border: none; border-radius: 8px; width: 40px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+  .send-btn:disabled { opacity: 0.3; }
 
-  .typing-indicator { display: flex; gap: 4px; align-items: center; padding: 12px 16px; }
-  .typing-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: bounce 1.2s infinite; }
-  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes bounce { 0%,80%,100%{transform:translateY(0)} 40%{transform:translateY(-5px)} }
-
-  .input-bar { padding: 16px 24px; border-top: 1px solid var(--border); background: var(--surface); display: flex; gap: 10px; align-items: flex-end; }
-  #chat-input { flex: 1; background: var(--card); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: 'DM Mono', monospace; font-size: 13px; padding: 10px 14px; resize: none; min-height: 40px; max-height: 120px; line-height: 1.5; transition: border-color 0.15s; }
-  #chat-input::placeholder { color: var(--dim); }
-  #chat-input:focus { outline: none; border-color: var(--accent); }
-  .send-btn { background: var(--accent); color: #0d0e11; border: none; border-radius: 8px; width: 40px; height: 40px; cursor: pointer; font-size: 16px; flex-shrink: 0; transition: background 0.15s, transform 0.1s; display: flex; align-items: center; justify-content: center; }
-  .send-btn:hover { background: var(--accent2); }
-  .send-btn:active { transform: scale(0.95); }
-  .send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-
-  .sidebar-right { background: var(--surface); border-left: 1px solid var(--border); padding: 20px 16px; overflow-y: auto; }
-  .reminder-item { padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 8px; font-size: 11px; }
-  .reminder-time { color: var(--accent); font-size: 10px; margin-top: 3px; }
-  .reminder-title { color: var(--text); }
   .empty-state { color: var(--dim); font-size: 11px; text-align: center; padding: 16px 0; }
-
-  .clear-btn { background: none; border: 1px solid var(--border); color: var(--muted); font-family: 'DM Mono', monospace; font-size: 10px; padding: 4px 10px; border-radius: 4px; cursor: pointer; margin-left: auto; }
-  .clear-btn:hover { border-color: var(--danger); color: var(--danger); }
-
-  .sidebar-left::-webkit-scrollbar, .sidebar-right::-webkit-scrollbar { width: 3px; }
-  .sidebar-left::-webkit-scrollbar-thumb, .sidebar-right::-webkit-scrollbar-thumb { background: var(--dim); }
 </style>
 </head>
 <body>
 <div class="app">
-
-  <!-- Top bar — API key removed, lives in Railway env vars -->
   <header class="topbar">
     <div class="logo">ARIA <span>/ Virtual Assistant Agent</span></div>
     <div style="display:flex;align-items:center;gap:6px;margin-left:auto">
       <div class="status-dot" id="status-dot"></div>
       <span class="status-label" id="status-label">ready</span>
     </div>
-    <button class="clear-btn" onclick="clearChat()">clear chat</button>
   </header>
 
-  <!-- Sidebar left -->
   <aside class="sidebar-left">
     <div class="sidebar-section">
       <div class="sidebar-label">Quick actions</div>
-      <button class="quick-btn" onclick="sendQuick('Give me my daily briefing')"><span class="qb-icon">◈</span> Daily briefing</button>
-      <button class="quick-btn" onclick="sendQuick('Show me all my pending tasks')"><span class="qb-icon">◉</span> View tasks</button>
-      <button class="quick-btn" onclick="sendQuick('What reminders do I have?')"><span class="qb-icon">◷</span> View reminders</button>
-      <button class="quick-btn" onclick="sendQuick('Draft a proposal for a new client')"><span class="qb-icon">◧</span> New proposal</button>
-      <button class="quick-btn" onclick="sendQuick('Help me draft a professional email')"><span class="qb-icon">◫</span> Draft email</button>
+      <button class="quick-btn" onclick="sendQuick('Give me my daily briefing')">◈ Daily briefing</button>
+      <button class="quick-btn" onclick="sendQuick('Show me all my pending tasks')">◉ View tasks</button>
+      <button class="quick-btn" onclick="sendQuick('What reminders do I have?')">◷ View reminders</button>
     </div>
-
     <div class="sidebar-section">
-      <div class="sidebar-label" style="display:flex;align-items:center;justify-content:space-between">
-        Tasks
-        <span id="task-count" style="color:var(--accent);font-size:10px"></span>
-      </div>
+      <div class="sidebar-label">Tasks <span id="task-count" style="color:var(--accent); margin-left:8px;"></span></div>
       <div id="tasks-list"><div class="empty-state">No tasks yet</div></div>
     </div>
   </aside>
 
-  <!-- Chat -->
   <main class="chat-area">
     <div class="messages" id="messages">
       <div class="msg">
         <div class="msg-avatar aria-avatar">A</div>
         <div class="msg-body">
-          <div class="msg-name">ARIA</div>
-          <div class="msg-bubble">
-            Good day. I'm <strong>ARIA</strong>, your personal assistant agent.<br><br>
-            I can <strong>manage your tasks</strong>, <strong>set reminders</strong>, <strong>draft emails and proposals</strong>, and give you a <strong>daily briefing</strong> — all in plain English.<br><br>
-            What's on your plate today?
-          </div>
+          <div class="msg-bubble">Good day. I am <strong>ARIA</strong>. How can I help you manage your workflow today?</div>
         </div>
       </div>
     </div>
     <div class="input-bar">
-      <textarea id="chat-input" placeholder="Tell ARIA what you need…" rows="1"></textarea>
+      <textarea id="chat-input" placeholder="Tell ARIA what you need..." rows="1"></textarea>
       <button class="send-btn" id="send-btn" onclick="sendMessage()">↑</button>
     </div>
   </main>
 
-  <!-- Sidebar right -->
   <aside class="sidebar-right">
     <div class="sidebar-section">
-      <div class="sidebar-label">Reminders
-        <span id="reminder-count" style="color:var(--accent);font-size:10px;margin-left:4px"></span>
-      </div>
+      <div class="sidebar-label">Reminders</div>
       <div id="reminders-list"><div class="empty-state">No reminders set</div></div>
     </div>
-
-    <div class="sidebar-section">
-      <div class="sidebar-label">Agent tools</div>
-      <div style="font-size:10px;color:var(--muted);line-height:1.9">
-        add_task<br>list_tasks<br>complete_task<br>set_reminder<br>list_reminders<br>cancel_reminder<br>draft_email<br>draft_proposal<br>get_daily_briefing
-      </div>
-    </div>
   </aside>
-
 </div>
 
 <script>
-const API = "https://web-production-bf893.up.railway.app";
-const SESSION = "aria_" + Math.random().toString(36).slice(2);
-let isThinking = false;
+  // Updated with your actual Railway URL
+  const API = "https://web-production-bf893.up.railway.app"; 
+  const SESSION = "aria_" + Math.random().toString(36).slice(2);
+  let isThinking = false;
 
-function formatMessage(text) {
-  return text
-    .replace(/```([\s\S]*?)```/g, '<pre>$1</pre>')
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.*?)\*/g, '<em>$1</em>')
-    .replace(/\n/g, '<br>');
-}
+  async function sendMessage(override) {
+    if (isThinking) return;
+    const input = document.getElementById("chat-input");
+    const text = override || input.value.trim();
+    if (!text) return;
 
-function appendMessage(role, content, steps) {
-  const container = document.getElementById("messages");
-  const isUser = role === "user";
-  const div = document.createElement("div");
-  div.className = "msg" + (isUser ? " user" : "");
+    appendMessage("user", text);
+    input.value = "";
+    setLoading(true);
 
-  let toolTrace = "";
-  if (steps && steps.length) {
-    toolTrace = '<div class="tool-trace">' +
-      steps.map(s => `<span class="tool-pill"><span class="tool-pill-name">${s.tool}</span></span>`).join("") +
-      '</div>';
-  }
-
-  div.innerHTML = `
-    <div class="msg-avatar ${isUser ? 'user-avatar' : 'aria-avatar'}">${isUser ? 'U' : 'A'}</div>
-    <div class="msg-body">
-      <div class="msg-name">${isUser ? 'You' : 'ARIA'}</div>
-      <div class="msg-bubble">${formatMessage(content)}${toolTrace}</div>
-    </div>`;
-  container.appendChild(div);
-  container.scrollTop = container.scrollHeight;
-}
-
-function showTyping() {
-  const container = document.getElementById("messages");
-  const div = document.createElement("div");
-  div.className = "msg"; div.id = "typing-msg";
-  div.innerHTML = `
-    <div class="msg-avatar aria-avatar">A</div>
-    <div class="msg-body">
-      <div class="msg-name">ARIA</div>
-      <div class="msg-bubble"><div class="typing-indicator">
-        <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
-      </div></div>
-    </div>`;
-  container.appendChild(div);
-  container.scrollTop = container.scrollHeight;
-}
-
-function removeTyping() {
-  const el = document.getElementById("typing-msg");
-  if (el) el.remove();
-}
-
-async function sendMessage(override) {
-  if (isThinking) return;
-  const input = document.getElementById("chat-input");
-  const text = override || input.value.trim();
-  if (!text) return;
-
-  input.value = "";
-  input.style.height = "40px";
-  appendMessage("user", text, null);
-
-  isThinking = true;
-  document.getElementById("send-btn").disabled = true;
-  document.getElementById("status-dot").className = "status-dot thinking";
-  document.getElementById("status-label").textContent = "thinking…";
-  showTyping();
-
-  try {
-    const res = await fetch(API + "/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: text, session_id: SESSION })
-    });
-    const data = await res.json();
-    removeTyping();
-    if (data.error) {
-      appendMessage("assistant", "Error: " + data.error, []);
-    } else {
-      appendMessage("assistant", data.reply, data.steps);
+    try {
+      const res = await fetch(`${API}/chat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text, session_id: SESSION })
+      });
+      
+      const data = await res.json();
+      if (data.error) {
+          appendMessage("assistant", "Error: " + data.error);
+      } else {
+          appendMessage("assistant", data.reply);
+      }
+      refreshState();
+    } catch(e) {
+      appendMessage("assistant", "Could not reach ARIA. Ensure the Railway service is active.");
+    } finally {
+      setLoading(false);
     }
-    refreshState();
-  } catch(e) {
-    removeTyping();
-    appendMessage("assistant", "Could not reach the agent server. Check that the Railway deployment is running.", []);
   }
 
-  isThinking = false;
-  document.getElementById("send-btn").disabled = false;
-  document.getElementById("status-dot").className = "status-dot";
-  document.getElementById("status-label").textContent = "ready";
-}
+  function appendMessage(role, content) {
+    const container = document.getElementById("messages");
+    const div = document.createElement("div");
+    div.className = `msg ${role === 'user' ? 'user' : ''}`;
+    div.innerHTML = `
+      <div class="msg-avatar ${role === 'user' ? 'user-avatar' : 'aria-avatar'}">${role === 'user' ? 'U' : 'A'}</div>
+      <div class="msg-body">
+        <div class="msg-name">${role === 'user' ? 'You' : 'ARIA'}</div>
+        <div class="msg-bubble">${content}</div>
+      </div>`;
+    container.appendChild(div);
+    container.scrollTop = container.scrollHeight;
+  }
 
-function sendQuick(msg) { sendMessage(msg); }
+  function setLoading(loading) {
+    isThinking = loading;
+    document.getElementById("send-btn").disabled = loading;
+    document.getElementById("status-dot").className = loading ? "status-dot thinking" : "status-dot";
+    document.getElementById("status-label").textContent = loading ? "thinking..." : "ready";
+  }
 
-async function refreshState() {
-  try {
-    const res = await fetch(API + "/state");
-    const state = await res.json();
-    renderTasks(state.tasks || []);
-    renderReminders(state.reminders || []);
-  } catch(e) {}
-}
+  function sendQuick(msg) { sendMessage(msg); }
 
-function renderTasks(tasks) {
-  const pending = tasks.filter(t => !t.done);
-  const el = document.getElementById("tasks-list");
-  document.getElementById("task-count").textContent = pending.length ? `${pending.length} pending` : "";
-  if (!tasks.length) { el.innerHTML = '<div class="empty-state">No tasks yet</div>'; return; }
-  el.innerHTML = tasks.slice(-8).reverse().map(t => `
-    <div class="task-item">
-      <div class="task-check ${t.done ? 'done' : ''}" onclick="completeTask(${t.id})" title="Mark done"></div>
-      <div class="task-title ${t.done ? 'done' : ''}">${t.title}</div>
-      <span class="priority-badge priority-${t.priority}">${t.priority}</span>
-    </div>`).join("");
-}
+  async function refreshState() {
+    try {
+      const res = await fetch(`${API}/state`);
+      const state = await res.json();
+      renderTasks(state.tasks || []);
+    } catch(e) {}
+  }
 
-function renderReminders(reminders) {
-  const el = document.getElementById("reminders-list");
-  document.getElementById("reminder-count").textContent = reminders.length ? `${reminders.length}` : "";
-  if (!reminders.length) { el.innerHTML = '<div class="empty-state">No reminders set</div>'; return; }
-  el.innerHTML = reminders.map(r => `
-    <div class="reminder-item">
-      <div class="reminder-title">${r.title}</div>
-      <div class="reminder-time">◷ ${r.datetime}</div>
-      ${r.note ? `<div style="color:var(--muted);font-size:10px;margin-top:2px">${r.note}</div>` : ""}
-    </div>`).join("");
-}
+  function renderTasks(tasks) {
+    const el = document.getElementById("tasks-list");
+    const pending = tasks.filter(t => !t.done);
+    document.getElementById("task-count").textContent = pending.length ? `(${pending.length})` : "";
+    
+    if (!tasks.length) {
+      el.innerHTML = '<div class="empty-state">No tasks yet</div>';
+      return;
+    }
 
-async function completeTask(id) {
-  await sendMessage(`Mark task ${id} as complete`);
-}
-
-async function clearChat() {
-  if (!confirm("Clear conversation history?")) return;
-  await fetch(API + "/clear", { method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify({session_id: SESSION}) }).catch(()=>{});
-  document.getElementById("messages").innerHTML = `
-    <div class="msg">
-      <div class="msg-avatar aria-avatar">A</div>
-      <div class="msg-body"><div class="msg-name">ARIA</div>
-        <div class="msg-bubble">Conversation cleared. What can I help you with?</div>
+    el.innerHTML = tasks.slice(-5).reverse().map(t => `
+      <div style="font-size:11px; padding:6px 0; border-bottom:1px solid var(--border); color:${t.done ? 'var(--muted)' : 'var(--text)'}">
+        ${t.done ? '✓' : '○'} ${t.title}
       </div>
-    </div>`;
-}
+    `).join("");
+  }
 
-document.getElementById("chat-input").addEventListener("input", function() {
-  this.style.height = "40px";
-  this.style.height = Math.min(this.scrollHeight, 120) + "px";
-});
-document.getElementById("chat-input").addEventListener("keydown", function(e) {
-  if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
-});
+  document.getElementById("chat-input").addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  });
 
-refreshState();
-setInterval(refreshState, 10000);
+  // Initial sync
+  refreshState();
+  setInterval(refreshState, 20000);
 </script>
 </body>
 </html>
